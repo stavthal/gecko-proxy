@@ -1,39 +1,82 @@
-.all-coins-container {
-    text-align: center;
-  }
-  
-  .all-coins-title {
-    font-size: 2rem;
-  }
-  
-  .all-coins-subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-  }
-  
-  .all-coins-table {
-    border-collapse: collapse;
-    width: 100%;
-    margin-top: 2rem;
-    font-family: Arial, sans-serif;
-  }
-  
-  .all-coins-row:hover {
-    background-color: #f1f1f1;
-    cursor: pointer;
-  }
-  
-  .all-coins-row td {
-    border: 1px solid #ddd;
-    padding: 1rem;
-    text-align: left;
-  }
-  
-  .all-coins-image {
-    width: 2rem;
-    margin-right: 0.5rem;
-  }
-  
-  .all-coins-positive {
-    color: green
-  }
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;400&display=swap');
+
+.page {
+  background: #fff;
+  color: #222;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.page.dark-mode {
+  background: #222;
+  color: #fff;
+}
+
+.toggle-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #fff;
+  color: #222;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.toggle-button.dark-mode {
+  background: #141414;
+  color: #fff;
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+.th {
+  background: #5ddeb1;
+  color: white;
+  font-weight: bold;
+  padding: 1rem;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.tr {
+  cursor: pointer;
+}
+
+.tr:hover {
+  border: 2px solid #5ddeb1;
+  border-radius: 5px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.td {
+  border: 1px solid #5ddeb1;
+  padding: 1rem;
+  text-align: left;
+}
+
+.coin-image {
+  width: 2rem;
+  margin-left: 1.0rem;
+}
+
+.span {
+  font-size: 1.2rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 100,
+}
+
+.h1 {
+  font-size: 2rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400,
+}
