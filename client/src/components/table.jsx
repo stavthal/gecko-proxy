@@ -2,7 +2,17 @@ import React, { useState } from "react";
 import "../css/AllCoinsPage.css";
 
 function AllCoinsPage(props) {
-  const [darkMode, setDarkMode] = useState(false);
+  const { coins , currentPage, onPageChange} = props;
+  const [darkMode, setDarkMode] = useState(true);
+
+  const handlePrevious = () => {
+    onPageChange(currentPage - 1);
+  } 
+
+  const handleNext = () => {
+    onPageChange(currentPage + 1);
+  }
+
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -10,6 +20,7 @@ function AllCoinsPage(props) {
 
   const toggleButtonClass = `toggle-button ${darkMode ? "dark-mode" : ""}`;
   const pageClass = `page ${darkMode ? "dark-mode" : ""}`;
+  console.log(coins);
 
   return (
     <div className={pageClass}>
@@ -31,7 +42,7 @@ function AllCoinsPage(props) {
           </tr>
         </thead>
         <tbody>
-          {props.coins.map((coin) => (
+          {coins && coins.map((coin) => (
             <tr className="tr" onClick={() => alert(coin.id)} key={coin.id}>
               <td className="td">
                 <img
@@ -43,8 +54,8 @@ function AllCoinsPage(props) {
               <td className="td">{coin.symbol.toUpperCase()}</td>
               <td className="td">{coin.name}</td>
               <td className="td">${coin.current_price.toLocaleString()}</td>
-              <td className="td">{coin.high_24h.toFixed(2)}</td>
-              <td className="td">{coin.low_24h.toFixed(2)}</td>
+              <td className="td">{coin.high_24h}</td>
+              <td className="td">{coin.low_24h}</td>
               <td
                 className="td"
                 style={{
@@ -53,13 +64,18 @@ function AllCoinsPage(props) {
                     : "red"
                 }}
               >
-                {coin.price_change_percentage_24h.toFixed(2)}
+                {coin.price_change_percentage_24h}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+    <div>
+      <button className='button' style={{backgroundColor: currentPage === 1 ? "gray" : ""}} disabled={currentPage === 1} onClick={() => handlePrevious()}>Previous</button>
+      <button className='button' onClick={() => handleNext()}>Next</button>
     </div>
+    </div>
+          
   );
 }
 
