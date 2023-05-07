@@ -32,6 +32,12 @@ cd gecko-proxy
 npm install
 ```
 
+4. Install React's dependencies
+```bash
+cd client && npm install
+cd ..
+```
+
 
 ## Usage
 
