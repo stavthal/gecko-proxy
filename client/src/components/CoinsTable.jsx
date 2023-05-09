@@ -9,26 +9,24 @@ function CoinsTable() {
   const [coins, setCoins] = useState([]);
   const [maxPages, setMaxPages] = useState(1);
   const [coinsPerPage, setCoinsPerPage] = useState(100); //a default value of 100 coins per page
+  const [inputCoinsPerPage, setInputCoinsPerPage] = useState(100); // same but just for the input use
 
 
 
   //fetch functions
 
   const getPage = async (page) => {
-    await axios(`http://localhost:5000/api/coins/markets/${page}&${coinsPerPage}`)
-    .then((res) => res.json())
-    .then((data) => setCoins(data))
-    .catch((error) => console.error(error));
+    const result = await axios(`http://localhost:5000/api/coins/markets/${page}/${coinsPerPage}}`)
+    setCoins(result.data);
   }
 
 
   const getMaxPages = async () => {
-    await fetch('http://localhost:5000/api/coins/list')
-    .then((res) => res.json())
-    .then((data) => setMaxPages(
-      Math.ceil(data.length / coinsPerPage) || 1 // in order to get the max amount of pages, even if the last page has less than 100 items
-    ))
-    .then((error) => console.error(error));
+    const result = await axios('http://localhost:5000/api/coins/list');
+    console.log(result.data.length);
+    setMaxPages(
+      Math.ceil(result.data.length / coinsPerPage) || 1 // in order to get the max amount of pages, even if the last page has less than 100 items
+    )
   }
 
   //
@@ -37,7 +35,7 @@ function CoinsTable() {
   useEffect(() => {
     getPage(currentPage);
     getMaxPages();
-  }, [currentPage, coinsPerPage]);
+  }, [currentPage,coinsPerPage]);
 
 
   const topRef = useRef(null); //used for scroll to top afer button press
@@ -55,35 +53,40 @@ function CoinsTable() {
   }
 
   const handleGo = () => {
-    setCurrentPage(parseInt(inputPage));
+    if (inputPage >= 1 && inputPage <= maxPages ) {
+      setCurrentPage(parseInt(inputPage));
+      topRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+    else {
+      alert(`Invalid number. Try a number between 1 and ${maxPages}`);
+      setInputPage("");
+    }
+    
     setInputPage("");
     topRef.current.scrollIntoView({ behavior: "smooth" });
   }
 
   const handleInputChange = (event) => {
-    if (event.target.value < 1 && event.target.value > maxPages) {
-      //code to not allow the user to set a page above the max number of the pages
-      alert(`Invalid Number. Try a number between 1 and ${maxPages}...`);
-      event.target.value = "";
+    setInputPage(event.target.value);
+  }
+
+  const handleShow = () => {
+    if (inputCoinsPerPage >= 1 && inputCoinsPerPage <= 250 ) {
+      setCoinsPerPage(inputCoinsPerPage);
+      topRef.current.scrollIntoView({ behavior: "smooth" });
     } else {
-      
+      alert("Invalid number. Try a number between 1 and 250...");
+      setInputCoinsPerPage("");
     }
     
   }
-
-
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   };
 
-  const handlePagesInput = (event) => {
-    if (event.target.value >= 1 && event.target.value <= 250 ) {
-      setCoinsPerPage(event.target.value);
-    } else {
-      alert(`Invalid Number. Try a number between 1 and 250...`);
-      setCoinsPerPage(100);
-    }
+  const handleCoinsPerPage = (event) => {
+      setInputCoinsPerPage(event.target.value);
   } 
 
   const toggleButtonClass = `toggle-button ${darkMode ? "dark-mode" : ""}`;
@@ -110,7 +113,7 @@ function CoinsTable() {
           </tr>
         </thead>
         <tbody>
-          {(coins != null) && coins.map((coin) => {
+          {coins && coins.map((coin) => {
             return (
               <tr className="tr" key={coin.id}>
                 <td className="td">
@@ -158,8 +161,8 @@ function CoinsTable() {
           <button className="button" onClick={handleGo}>Go</button>
         </div>
         <div className="input-group">
-          <input type="number" value={coinsPerPage} onChange={handlePagesInput} placeholder="Coins per page..." />
-          <button className="button" onClick={() => setCoinsPerPage(coinsPerPage)}>Show</button>
+          <input type="number" value={inputCoinsPerPage} onChange={handleCoinsPerPage} placeholder="Coins per page..." />
+          <button className="button" onClick={handleShow}>Show</button>
         </div>
       </div>
     </div>

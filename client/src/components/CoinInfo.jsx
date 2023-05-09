@@ -11,24 +11,23 @@ const CoinInfo = ({match}) => {
     setDarkMode(!darkMode);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios(`http://localhost:5000/api/coins/${id}`);
-      setCoinData(result.data);
-      console.log(coinData);
-    };
+  const fetchData = async () => {
+    const result = await axios(`http://localhost:5000/api/coins/${id}`);
+    setCoinData(result.data);
+  };
 
+  useEffect(() => {
     fetchData();
   }, [id]);
 
   return (
     <div className={`page ${darkMode ? "dark-mode" : ""}`}>
-      <img className='coin-logo' src={coinData?.image?.large} alt="coin logo" />
+      <img className='coin-logo' src={coinData?.image?.large} alt="coin_logo" />
       <h1>{coinData.name}</h1>
       <div className="coin-info">
         <p>{coinData?.description?.en}</p>
       </div>
-      <div className="price-info">
+     <div className="price-info">
         <table>
           <thead>
             <tr>
@@ -84,7 +83,8 @@ const CoinInfo = ({match}) => {
       <button className={`toggle-button ${darkMode ? "dark-mode" : ""}`} onClick={toggleDarkMode}>
         {darkMode ? "Light Mode" : "Dark Mode"}
       </button>
-    </div>
+      {coinData.name == undefined && <h1>The coin you entered was not found...</h1>}
+</div>
   );
 };
 
