@@ -7,13 +7,27 @@ const PORT = process.env.PORT || 5000;
 // Enable CORS
 app.use(cors());
 
-// Define the routes
-// app.get('/api/coins/markets', async (req, res) => {
+
+app.get('/api/coins/list', async (req,res) => {
+  try {
+    const response = await fetch(
+      'https://api.coingecko.com/api/v3/coins/list'
+    );
+    const data = await response.json();
+    console.log(data.length);
+    res.send(data);
+  }
+  catch (error) {
+    console.error(error);
+    res.status(500).json({message: 'Server Error' });
+  }
+});
+
+// app.get('/api/coins/markets/:page', async (req, res) => {
 //   try {
 //     const response = await fetch(
-//       'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false'
+//       `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=${req.params.page}&sparkline=false`
 //     );
-//     const response = await fetch('data.json');
 //     const data = await response.json();
 //     res.json(data);
 //   } catch (error) {
@@ -22,7 +36,7 @@ app.use(cors());
 //   }
 // });
 
-app.get('/api/coins/markets', (req, res) => {
+app.get('/api/coins/markets/:page', async (req, res) => {
   const data = require('./data.json');
   res.json(data);
 });

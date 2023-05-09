@@ -1,23 +1,18 @@
+import React from 'react';
 import './App.css';
-import AllCoinsPage from './components/table.jsx'
-import { useState, useEffect } from 'react';
+import CoinsTable from './components/CoinsTable.jsx';
+import CoinDetail from './components/CoinDetail.jsx';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 function App() {
-
-  const [coins, setCoins] = useState([]);
-
-  useEffect(() => {
-    fetch('http://localhost:5000/api/coins/markets')
-      .then((res) => res.json())
-      .then((data) => setCoins(data))
-      .catch((error) => console.error(error));
-  }, []);
-
-
   return (
-    <div className="App">
-      <AllCoinsPage coins={coins}/>
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={CoinsTable} />
+        <Route path="/coin/:id" component={CoinDetail} />
+      </Switch>
+    </Router>
   );
 }
+
 export default App;
