@@ -23,23 +23,23 @@ app.get('/api/coins/list', async (req,res) => {
   }
 });
 
-// app.get('/api/coins/markets/:page', async (req, res) => {
-//   try {
-//     const response = await fetch(
-//       `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=${req.params.page}&sparkline=false`
-//     );
-//     const data = await response.json();
-//     res.json(data);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: 'Server Error' });
-//   }
-// });
-
-app.get('/api/coins/markets/:page', async (req, res) => {
-  const data = require('./data.json');
-  res.json(data);
+app.get('/api/coins/markets/:page/:coins_per_page', async (req, res) => {
+  try {
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=${req.params.coins_per_page}&page=${req.params.page}&sparkline=false`
+    );
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
 });
+
+// app.get('/api/coins/markets/:page/:coins_per_page', async (req, res) => {
+//   const data = require('./data.json');
+//   res.json(data);
+// });
 
 app.get('/api/coins/:id', async (req, res) => {
   try {
