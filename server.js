@@ -36,11 +36,6 @@ app.get('/api/coins/markets/:page/:coins_per_page', async (req, res) => {
   }
 });
 
-// app.get('/api/coins/markets/:page/:coins_per_page', async (req, res) => {
-//   const data = require('./data.json');
-//   res.json(data);
-// });
-
 app.get('/api/coins/:id', async (req, res) => {
   try {
     const response = await fetch(

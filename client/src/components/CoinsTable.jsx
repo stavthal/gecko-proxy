@@ -20,21 +20,8 @@ function CoinsTable() {
     setCoins(result.data);
   }
 
-
-  const getMaxPages = async () => {
-    const result = await axios('http://localhost:5000/api/coins/list');
-    console.log(result.data.length);
-    setMaxPages(
-      Math.ceil(result.data.length / inputCoinsPerPage) || 1 // in order to get the max amount of pages, even if the last page has less than 100 items
-    )
-  }
-
-  //
-
-
   useEffect(() => {
     getPage(currentPage);
-    getMaxPages();
   }, [currentPage,coinsPerPage]);
 
 
@@ -50,24 +37,6 @@ function CoinsTable() {
   const handleNext = () => {
     setCurrentPage(currentPage + 1);
     topRef.current.scrollIntoView({ behavior: "smooth" });
-  }
-
-  const handleGo = () => {
-    if (inputPage >= 1 && inputPage <= maxPages ) {
-      setCurrentPage(parseInt(inputPage));
-      topRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-    else {
-      alert(`Invalid number. Try a number between 1 and ${maxPages}`);
-      setInputPage("");
-    }
-    
-    setInputPage("");
-    topRef.current.scrollIntoView({ behavior: "smooth" });
-  }
-
-  const handleInputChange = (event) => {
-    setInputPage(event.target.value);
   }
 
   const handleShow = () => {
@@ -153,13 +122,8 @@ function CoinsTable() {
     <div>
       <div className="input-group">
         <button className='button' style={{width: '100px' , backgroundColor: currentPage === 1 ? "gray" : ""}} disabled={currentPage === 1} onClick={() => handlePrevious()}>Previous</button>
-        <button className='button' style={{width: '100px' , backgroundColor: currentPage === maxPages ? "gray" : ""}} disabled={currentPage === maxPages} onClick={() => handleNext()}>Next</button>
+        <button className='button' style={{width: '100px' }} onClick={() => handleNext()}>Next</button>
       </div>
-      <div className="input-group">
-          <span className="span">Maximum number of pages: {maxPages}</span><br/>
-          <input type="number" value={inputPage} onChange={handleInputChange} placeholder="Enter page number..." />
-          <button className="button" onClick={handleGo}>Go</button>
-        </div>
         <div className="input-group">
           <input type="number" value={inputCoinsPerPage} onChange={handleCoinsPerPage} placeholder="Coins per page..." />
           <button className="button" onClick={handleShow}>Show</button>
