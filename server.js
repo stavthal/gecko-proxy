@@ -36,6 +36,9 @@ app.get('/api/coins/markets/:page/:coins_per_page', async (req, res) => {
   }
 });
 
+
+//This route should only be enabled for demonstration use, after commenting out the relevant route to this one.
+//The purpose of this route is to use the data.json file in order to view a saved file of the API payload.
 // app.get('/api/coins/markets/:page/:coins_per_page', async (req, res) => {
 //   const data = require('./data.json');
 //   res.json(data);
