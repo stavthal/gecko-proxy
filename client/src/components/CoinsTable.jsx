@@ -136,16 +136,6 @@ function CoinsTable() {
 export default CoinsTable;
 
 
-const linkStyle = {
-  textDecoration: 'underline',
-  color: 'inherit',
-  cursor: 'pointer',
-  padding: '1rem',
-  textAlign: 'left'
-};
-
-
-
 
 
 
