@@ -25,7 +25,7 @@ function CoinsTable() {
     const result = await axios('http://localhost:5000/api/coins/list');
     console.log(result.data.length);
     setMaxPages(
-      Math.ceil(result.data.length / coinsPerPage) || 1 // in order to get the max amount of pages, even if the last page has less than 100 items
+      Math.ceil(result.data.length / inputCoinsPerPage) || 1 // in order to get the max amount of pages, even if the last page has less than 100 items
     )
   }
 
